@@ -1,0 +1,12 @@
+.env
+.DS_Store
+vendor/
+composer.lock
+
+# ignore IDE
+.idea
+.vscode
+
+# ignore log files
+*.log
+.phpunit.result.cache

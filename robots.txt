@@ -1,0 +1,7 @@
+User-agent: *
+
+Disallow: /*.ico$
+Disallow: /cgi-bin/
+
+Allow: /*.pdf$
+Allow: /
