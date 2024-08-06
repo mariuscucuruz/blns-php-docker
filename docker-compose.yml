@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   php:
     container_name: ${APP_PREFIX}-app
