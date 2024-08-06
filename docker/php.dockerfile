@@ -1,6 +1,5 @@
 FROM php:8.2-fpm AS build
 
-### Install system dependencies
 RUN apt-get update -yyq \
     && apt-get install -yyq --no-install-recommends \
         git curl vim nano zip unzip \

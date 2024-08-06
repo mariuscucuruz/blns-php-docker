@@ -11,6 +11,14 @@ A dockerized version or the PHPimplementation of the Big List of Naughty Strings
 
 > The Big List of Naughty Strings is a list of strings which have a high probability of causing issues when used as user-input data.
 
+#### Notes
+
+Changing PHP version is trivial, just change the `FROM` value in the `docker/php.dockerfile` file; currently it is set to `8.2-fpm`. For instance, if you want to use PHP 8.1, just change the `FROM` value in the `docker/php.dockerfile` file to `8.1-fpm`.
+
+For this reason, the composer.lock file is Git ignored, so you can use any version of PHP you want.
+
+Optionally, there is a `docker/php-alpine.dockerfile` file, which uses the image with Alpine Linux thus resulting in a smaller image size.
+
 
 ## Prerequisites
 
