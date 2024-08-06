@@ -1,9 +1,9 @@
-License: Maintainer
+License: MIT
+Description: Dockerized PHP class to work with the BLNS-PHP class that implements the BLNS list.
 
-/* TEAM */
+/* ACKNOWLEDGEMENTS */
 BLNS Maintainer: Max Woolf (@minimaxir)
 BLNS PHP: MattSparks (@mattsparks)
-Description: Docerized PHP class to work with the BLNS-PHP class that implements the BLNS list.
 
 /* SITE */
 Web Developer: Marius CUCURUZ (@mariuscucuruz)
@@ -15,6 +15,5 @@ From: London, United Kingdom
 Language: English
 Launch date: 2024/08/05
 Last update: 2024/08/10
-Language: English
-Doctype: HTML5
+Environment: Docker (Docker Compose), PHP
 IDE: VSCode, Vim, Nano
