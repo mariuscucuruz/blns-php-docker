@@ -1,19 +1,16 @@
-License: MIT
-Description: Dockerized PHP class to work with the BLNS-PHP class that implements the BLNS list.
-
-/* ACKNOWLEDGEMENTS */
+/* THANKS */
 BLNS Maintainer: Max Woolf (@minimaxir)
 BLNS PHP: MattSparks (@mattsparks)
 
 /* SITE */
-Web Developer: Marius CUCURUZ (@mariuscucuruz)
-About: https://linktr.ee/marius.himself
-Email: marius.cucuruz[at]gmail.com
-From: London, United Kingdom
-
-/* MISC */
+License: MIT
+Description: Dockerization of the PHP implementation of BLNS list.
+Components: Docker (Docker Compose), PHP, Composer, PHPUnit
 Language: English
 Launch date: 2024/08/05
-Last update: 2024/08/07
-Environment: Docker (Docker Compose), PHP
-IDE: VSCode, Vim, Nano
+Last up date: 2024/08/07
+Developer: Marius CUCURUZ (@mariuscucuruz)
+About: https://linktr.ee/marius.himself
+Email: marius.cucuruz[at]gmail.com
+Web: https://www.marius.uk/
+From: London, United Kingdom
