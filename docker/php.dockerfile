@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2-fpm AS build
 
 RUN apt-get update -yyq \
     && apt-get install -yyq --no-install-recommends \
