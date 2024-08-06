@@ -8,7 +8,7 @@ RUN apt-get update -yyq \
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
-COPY ./app/composer.* /var/www/html
+COPY ./app/composer.* /var/www/html/
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
