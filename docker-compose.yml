@@ -1,9 +1,7 @@
-version: '3.7'
-
 services:
   php:
     container_name: ${APP_PREFIX}-app
-    image: php:fpm-alpine
+    image: supermariux/blnsphp:latest
     build:
       context: .
       dockerfile: ./docker/php.dockerfile

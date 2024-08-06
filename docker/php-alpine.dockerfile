@@ -1,9 +1,8 @@
-FROM php:8.2-fpm
+FROM php:8.2-fpm-alpine
 
-RUN apt-get update -yyq \
-    && apt-get install -yyq --no-install-recommends \
-        git curl vim nano zip unzip \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apk update \
+    && apk add --virtual build-deps vim \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
