@@ -3,27 +3,20 @@ FROM php:8.2-fpm AS build
 ### Install system dependencies
 RUN apt-get update -yyq \
     && apt-get install -yyq --no-install-recommends \
-        libmcrypt-dev libpng-dev libzip-dev \
-        libfreetype-dev libjpeg62-turbo-dev \
         git curl vim nano zip unzip \
-#    && docker-php-ext-install fileinfo mbstring exif gd \
-#    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-#    && docker-php-ext-install -j$(nproc) gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
-COPY ./app /var/www/html
+COPY ./app/composer.* /var/www/html/
 WORKDIR /var/www/html
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
-
-COPY ./app/composer.* /var/www/html
-
 RUN composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
 
-RUN ./vendor/bin/phpunit tests/ -vvv
+COPY ./app /var/www/html
+RUN ./vendor/bin/phpunit tests/ -vvv --coverage-text
 
 
 ### Could use some help implementing multi-stage builds into a minimal image:
@@ -50,14 +43,6 @@ ARG WEBGROUP=${WEBGROUP:-root}
 ARG UID=${UID:-1000}
 ARG GID=${GID:-1000}
 
-### Create matching user & group to preserve file ownership between host and container:
-# RUN addgroup --gid ${GID} --system ${WEBGROUP}
-# RUN adduser --disabled-password --gecos '' --uid ${UID} --ingroup ${WEBGROUP} ${WEBUSER}
-# RUN chown -R ${WEBUSER}:${WEBGROUP} /var/www/html
-
-### Update PHP-FPM user:
-# RUN sed -ri -e "s!user = www-data!user = ${WEBUSER}!g" /usr/local/etc/php-fpm.d/www.conf
-# RUN sed -ri -e "s!group = www-data!group = ${WEBGROUP}!g" /usr/local/etc/php-fpm.d/www.conf
 ### Create matching user & group to preserve file ownership between host and container:
 RUN addgroup --gid ${GID} --system ${WEBGROUP}
 RUN adduser --disabled-password --gecos '' --uid ${UID} --ingroup ${WEBGROUP} ${WEBUSER}
