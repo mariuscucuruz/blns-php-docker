@@ -26,8 +26,10 @@ RUN composer install --no-interaction --no-progress --no-suggest --optimize-auto
 RUN ./vendor/bin/phpunit tests/ -vvv
 
 
-### Could use some help implementing multi-stage builds into a minimal image.
-### Naming the previous stage (`FROM php:8.2-fpm as build`) is not allowed.
+### Could use some help implementing multi-stage builds into a minimal image:
+### When naming the previous stage (`FROM php:8.2-fpm as build`) and 
+### re-instating the bellow commented out COPY statements leads it to 
+### an error starting the php-fpm service.
 FROM scratch
 COPY --from=build /bin /bin
 COPY --from=build /usr /usr
@@ -48,6 +50,14 @@ ARG WEBGROUP=${WEBGROUP:-root}
 ARG UID=${UID:-1000}
 ARG GID=${GID:-1000}
 
+### Create matching user & group to preserve file ownership between host and container:
+# RUN addgroup --gid ${GID} --system ${WEBGROUP}
+# RUN adduser --disabled-password --gecos '' --uid ${UID} --ingroup ${WEBGROUP} ${WEBUSER}
+# RUN chown -R ${WEBUSER}:${WEBGROUP} /var/www/html
+
+### Update PHP-FPM user:
+# RUN sed -ri -e "s!user = www-data!user = ${WEBUSER}!g" /usr/local/etc/php-fpm.d/www.conf
+# RUN sed -ri -e "s!group = www-data!group = ${WEBGROUP}!g" /usr/local/etc/php-fpm.d/www.conf
 ### Create matching user & group to preserve file ownership between host and container:
 RUN addgroup --gid ${GID} --system ${WEBGROUP}
 RUN adduser --disabled-password --gecos '' --uid ${UID} --ingroup ${WEBGROUP} ${WEBUSER}
