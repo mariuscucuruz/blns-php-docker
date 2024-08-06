@@ -1,17 +1,17 @@
-FROM php:8.2-fpm
+FROM php:8.2-fpm AS build
 
-# Install system dependencies
-RUN apt-get update -yyq && apt-get install -yyq --no-install-recommends \
+### Install system dependencies
+RUN apt-get update -yyq \
+    && apt-get install -yyq --no-install-recommends \
         libmcrypt-dev libpng-dev libzip-dev \
         libfreetype-dev libjpeg62-turbo-dev \
-        git curl zip unzip \
-#    && docker-php-ext-install mbstring exif pcntl bcmath gd \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
+        git curl vim nano zip unzip \
+#    && docker-php-ext-install fileinfo mbstring exif gd \
+#    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+#    && docker-php-ext-install -j$(nproc) gd \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY ./app /var/www/html
 WORKDIR /var/www/html
@@ -21,34 +21,41 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 COPY ./app/composer.* /var/www/html
 
-RUN ./vendor/bin/phpunit tests/
+RUN composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+RUN ./vendor/bin/phpunit tests/ -vvv
 
 
-# FROM scratch
-# COPY --from=build /bin /bin
-# COPY --from=build /usr /usr
-# COPY --from=build /usr/local/bin/php /usr/local/bin/php
-# COPY --from=build /usr/local/php /usr/local/php
-# COPY --from=build /usr/local/sbin/php-fpm /usr/local/sbin/php-fpm
-# COPY --from=build /usr/bin/composer /usr/bin/composer
-# COPY --from=build /var/www/html /var/www/html
+### Could use some help implementing multi-stage builds into a minimal image.
+### When naming the previous stage (`FROM php:8.2-fpm as build`) and 
+### re-instating the bellow commented out COPY statements leads it to 
+### an error starting the php-fpm service.
+FROM scratch
+COPY --from=build /bin /bin
+COPY --from=build /usr /usr
+COPY --from=build /usr/local/bin/php /usr/local/bin/php
+COPY --from=build /usr/local/php /usr/local/php
+COPY --from=build /usr/local/sbin/php-fpm /usr/local/bin/php-fpm
+COPY --from=build /usr/bin/composer /usr/bin/composer
+COPY --from=build /var/www/html /var/www/html
 
 ARG UID
 ARG GID
 ARG WEBUSER
 ARG WEBGROUP
 
-ARG WEBUSER=${WEBUSER:-marius}
-ARG WEBGROUP=${WEBGROUP:-marius}
+### Defaults:
+ARG WEBUSER=${WEBUSER:-root}
+ARG WEBGROUP=${WEBGROUP:-root}
 ARG UID=${UID:-1000}
 ARG GID=${GID:-1000}
 
-# create matching user and group
+### Create matching user & group to preserve file ownership between host and container:
 # RUN addgroup --gid ${GID} --system ${WEBGROUP}
 # RUN adduser --disabled-password --gecos '' --uid ${UID} --ingroup ${WEBGROUP} ${WEBUSER}
-# RUN chown -R ${WEBUSER}:${WEBGROUP} .
+# RUN chown -R ${WEBUSER}:${WEBGROUP} /var/www/html
 
-# update PHP-FPM user
+### Update PHP-FPM user:
 # RUN sed -ri -e "s!user = www-data!user = ${WEBUSER}!g" /usr/local/etc/php-fpm.d/www.conf
 # RUN sed -ri -e "s!group = www-data!group = ${WEBGROUP}!g" /usr/local/etc/php-fpm.d/www.conf
 
