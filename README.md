@@ -4,7 +4,7 @@ A dockerized version or the PHPimplementation of the Big List of Naughty Strings
 
 1. [PHP implementation of the Big List of Naughty Strings](https://github.com/mattsparks/blns-php) by [Matt Sparks](https://developmentmatt.com/).
 
-> The *PHP implementation* of the [Big List of Naughty Strings](https://github.com/minimaxir/big-list-of-naughty-strings) by [Max Woolf](https://minimaxir.com/). A 
+> The *PHP implementation* of the [Big List of Naughty Strings](https://github.com/minimaxir/big-list-of-naughty-strings) by [Max Woolf](https://minimaxir.com/).
 
 
 2. The infamous [Big List of Naughty Strings](https://github.com/minimaxir/big-list-of-naughty-strings):

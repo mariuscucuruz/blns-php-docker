@@ -5,6 +5,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/php.dockerfile
+      args:
+        - UID=${UID:-(id -u)}
+        - GID=${GID:-(id -g)}
+        - WEBUSER=${WEBUSER:-(id -un)}
+        - WEBGROUP=${WEBGROUP:-(id -gn)}
     restart: unless-stopped
     ports:
       - ${APP_SERVER_PORT:-9000}:9000
