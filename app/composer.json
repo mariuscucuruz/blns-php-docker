@@ -53,7 +53,7 @@
             "@test"
         ],
         "post-update-cmd": [
-            "@test"
+            "@check"
         ]
     },
     "scripts-descriptions": {
