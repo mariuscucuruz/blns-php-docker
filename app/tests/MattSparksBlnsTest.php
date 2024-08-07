@@ -1,11 +1,11 @@
 <?php
 
-namespace MattSparks\BLNS\Tests;
+namespace VanillaPHP\Tests;
 
 use MattSparks\BLNS\BLNS;
 use PHPUnit\Framework\TestCase;
 
-class BlnsTest extends TestCase
+class MattSparksBlnsTest extends TestCase
 {
     protected static $blns;
 
