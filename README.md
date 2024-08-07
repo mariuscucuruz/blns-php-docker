@@ -2,7 +2,7 @@
 
 A dockerized version or the PHPimplementation of the Big List of Naughty Strings.
 
-1. [Big List of Naughty Strings PHP](https://github.com/minimaxir/big-list-of-naughty-strings) by [Matt Sparks](https://developmentmatt.com/).
+1. [PHP implementation of the Big List of Naughty Strings](https://github.com/mattsparks/blns-php) by [Matt Sparks](https://developmentmatt.com/).
 
 > The *PHP implementation* of the [Big List of Naughty Strings](https://github.com/minimaxir/big-list-of-naughty-strings) by [Max Woolf](https://minimaxir.com/). A 
 
@@ -10,6 +10,9 @@ A dockerized version or the PHPimplementation of the Big List of Naughty Strings
 2. The infamous [Big List of Naughty Strings](https://github.com/minimaxir/big-list-of-naughty-strings):
 
 > The Big List of Naughty Strings is a list of strings which have a high probability of causing issues when used as user-input data.
+
+3. [Vanilla PHP application](https://github.com/frankjardel/vanilla-php-library) via PHP Composer.
+
 
 #### Notes
 
@@ -29,6 +32,8 @@ Install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](h
 
 ```bash
 docker compose up -d --build --remove-orphans 
+
+docker exec -it blns-php-app bash -c "composer check"
 ```
 
 ## Contribute
