@@ -1,6 +1,6 @@
 <?php
 
-namespace VanillaPHP\Tests;
+namespace App\VanillaPHP\Tests;
 
 use MattSparks\BLNS\BLNS;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +11,7 @@ class MattSparksBlnsTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$blns = new BLNS;
+        self::$blns = new BLNS();
     }
 
     public function test_that_lists_are_converted_to_array()

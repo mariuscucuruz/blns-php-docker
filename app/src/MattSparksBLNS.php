@@ -1,6 +1,6 @@
 <?php
 
-namespace VanillaPHP;
+namespace App\VanillaPHP;
 
 use MattSparks\BLNS\BLNS;
 

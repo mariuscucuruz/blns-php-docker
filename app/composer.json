@@ -12,19 +12,19 @@
     ],
     "require": {
         "blns/blns": "*",
-        "mattsparks/blns-php": "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.0"
+        "mattsparks/blns-php": "*",
+        "phpunit/phpunit": "^9",
+        "squizlabs/php_codesniffer": "^3",
+        "phan/phan": "^5"
     },
     "autoload": {
         "psr-4": {
-            "VanillaPHP\\": "src"
+            "App\\VanillaPHP\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VanillaPHP\\Tests\\": "test"
+            "App\\VanillaPHP\\Tests\\": "tests"
         }
     },
     "repositories": [
@@ -42,5 +42,25 @@
                 }
             }
         }
-    ]
+    ],
+    "scripts": {
+        "test": "phpunit tests",
+        "phan": "phan --allow-polyfill-parser",
+        "cs": "phpcs --standard=PSR12 src/",
+        "check": [
+            "@phan",
+            "@cs",
+            "@test"
+        ],
+        "post-update-cmd": [
+            "@test"
+        ]
+    },
+    "scripts-descriptions": {
+        "check": "Run all custom scripts",
+        "test": "Run tests with Phpunit",
+        "phan": "Run Phan for find errors in code",
+        "cs": "Run cs for check design of code"
+    },
+    "bin": ["index.php"]
 }
